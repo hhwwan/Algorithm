@@ -12,6 +12,7 @@
 도시 이름은 최대 20자로 이루어져 있다.
 """
 
+# 내가 짠 코드 -> 정답
 def solution(cacheSize, cities):
     answer = 0
     cache = []
@@ -38,4 +39,26 @@ def solution(cacheSize, cities):
                 cache.append(city)
                 answer += 5
                 
+    return answer
+
+# 위 코드에서 중복 제거하고 다듬은 코드
+def solution(cacheSize, cities):
+    answer = 0
+    cache = []
+    lower_cities = [x.lower() for x in cities] # 도시이름 모두 소문자로 바꾸기
+
+    if cacheSize == 0:
+        return 5 * len(cities)
+    
+    for city in lower_cities:
+        if city in cache:
+            cache.remove(city)
+            answer += 1  # cache hit
+        else:
+            if len(cache) == cacheSize:
+                cache.pop(0)  # 가장 오래된 항목 제거 (LRU)
+            answer += 5  # cache miss
+
+        cache.append(city) # cacheSize보다 작을땐 무조건 append
+
     return answer
