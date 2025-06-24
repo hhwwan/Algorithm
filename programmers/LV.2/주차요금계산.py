@@ -38,6 +38,7 @@
 차량 번호가 작은 자동차부터 청구할 주차 요금을 차례대로 정수 배열에 담아서 return 하도록 solution 함수를 완성해주세요.
 """
 
+#  정답이긴하나 반복되는 코드가 너무 많아서 다음에는 반복되는 부분을 함수로 정의해서 풀어보는 연습 해볼것
 def minute_hour(hour, minute):
     only_minute = hour * 60 + minute
     return only_minute
