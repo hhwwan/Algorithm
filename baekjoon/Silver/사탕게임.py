@@ -10,3 +10,53 @@
 빨간색은 C, 파란색은 P, 초록색은 Z, 노란색은 Y로 주어진다.
 첫째 줄에 상근이가 먹을 수 있는 사탕의 최대 개수를 출력한다.
 """
+
+N = int(input())
+candy = [list(input()) for _ in range(N)]
+
+# 최대길이 구하는 함수
+def check_length():
+    max_length = 1
+
+    for k in range(N):
+        length = 1
+        # 오른쪽이 같은 경우
+        for x in range(N):
+            if x + 1 < N and candy[k][x] == candy[k][x + 1]:
+                length += 1
+                max_length = max(max_length, length)
+            else:
+                length = 1
+        # 밑쪽이 같은 경우
+        for y in range(N):
+            if y + 1 < N and candy[y][k] == candy[y + 1][k]:
+                length += 1
+                max_length = max(max_length, length)
+            else:
+                length = 1
+    return max_length
+
+answer = 1
+for i in range(N): # 행
+    for j in range(N - 1): # 열
+        # 오른쪽이 다른 경우
+        if j + 1 < N and candy[i][j] != candy[i][j+1]:
+            candy[i][j], candy[i][j+1] = candy[i][j+1], candy[i][j]
+
+            # 최대길이 검사
+            answer = max(answer, check_length())
+
+            # 원상복귀
+            candy[i][j], candy[i][j+1] = candy[i][j+1], candy[i][j]
+
+        # 밑쪽이 다른 경우
+        if i + 1 < N and candy[i][j] != candy[i+1][j]:
+            candy[i][j], candy[i+1][j] = candy[i+1][j], candy[i][j]
+            
+            # 최대길이 검사
+            answer = max(answer, check_length())
+
+            # 원상복귀
+            candy[i][j], candy[i+1][j] = candy[i+1][j], candy[i][j]
+
+print(answer)
